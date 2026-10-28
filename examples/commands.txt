@@ -1,0 +1,98 @@
+GDB — the distilled commands
+====================================================================
+Placeholders: <prog> is your program
+built with -g; <file> is a core file.
+
+BEFORE ANYTHING (chapter 3)
+--------------------------------------------------------------------
+  gcc -g -O0 -o <prog> prog.c      # the map: -g, unoptimised
+  gcc -g -O2 -o <prog>-o2 prog.c   # the release build, for
+                                   # chapter 14's comparisons
+  gdb --version
+  gdb -q ./<prog>                  # -q skips the banner
+
+THE LOOP (chapters 4-5)
+--------------------------------------------------------------------
+  (gdb) break main                 # or: break file.c:23
+  (gdb) run                        # fresh start, every time
+  (gdb) run 100 -40                # ... with arguments
+  (gdb) step                       # one line, INTO calls
+  (gdb) next                       # one line, OVER calls
+  (gdb) finish                     # out of this function,
+                                   # with its return value
+  (gdb) until                      # to the end of the loop
+  (gdb) continue                   # run to the next stop
+  (gdb) print total                # any expression, in the
+  (gdb) print (9 / 5)              # program's own language
+  (gdb) info locals                # this frame's variables
+  (gdb) info args                  # this frame's arguments
+  (gdb) list                       # source around the stop
+  (gdb) quit                       # asks first, if stopped
+
+AFTER A CRASH (chapter 5)
+--------------------------------------------------------------------
+  (gdb) run                        # let it die in custody
+  (gdb) backtrace                  # how it got here; bt full
+                                   # adds every frame's locals
+  (gdb) print slot                 # the value at the scene
+  (gdb) frame 1                    # visit the caller...
+  (gdb) up / down                  # ...one frame at a time
+
+BREAKPOINTS (chapter 6)
+--------------------------------------------------------------------
+  (gdb) break store_value          # by function
+  (gdb) break basket.c:23 if i == 2
+                                   # by line, with a promise:
+                                   # stop only if true
+  (gdb) info breakpoints           # the ledger, conditions
+                                   # included
+  (gdb) disable 1 / enable 1 / delete 2
+
+WATCHPOINTS (chapter 7)
+--------------------------------------------------------------------
+  (gdb) watch total                # stop when it CHANGES
+  (gdb) rwatch total               # stop when it is READ
+  (gdb) display total              # print at every stop,
+                                   # without stopping for it
+  (gdb) delete 2                   # tidy up before the frame
+                                   # dies and takes it with it
+
+BATCH MODE (chapter 9)
+--------------------------------------------------------------------
+  gdb -q ./<prog> -batch -ex 'break f' -ex 'run 100' \
+      -ex 'print x'                # a session as a script:
+                                   # evidence, repetition,
+                                   # automation
+  gdb --args ./<prog> -40          # arguments known up front
+  (gdb) set args -40               # ... or inside, remembered
+
+CORE FILES (chapter 10)
+--------------------------------------------------------------------
+  cat /proc/sys/kernel/core_pattern
+                                   # where cores go here
+  ulimit -c unlimited              # arrange BEFORE the crash,
+                                   # in the launcher's context
+  gdb ./<prog> <file>              # open the remains; bt,
+                                   # frame and print work; run
+                                   # and step do not
+  (gdb) gcore basket.core          # GDB writes a core from
+                                   # a stopped program, whatever
+                                   # the kernel's arrangements
+
+MAKING IT YOURS (chapter 11)
+--------------------------------------------------------------------
+  ~/.gdbinit                       # runs at every startup;
+                                   # the lab's is gdb-lab/gdbinit
+  (gdb) show pagination            # every set has a show:
+                                   # verify, don't assume
+  (gdb) define bmain ... end       # commands of your own
+  gdb -nx                          # start with NO init file:
+                                   # the clean room
+
+ATTACHING (chapters 12, 15)
+--------------------------------------------------------------------
+  gdb -p PID                       # stop a running process;
+  (gdb) detach                     # let it go on afterwards
+  cat /proc/sys/kernel/yama/ptrace_scope
+                                   # 1 = your descendants only;
+                                   # the refusal names it too

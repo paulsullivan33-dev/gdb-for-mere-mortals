@@ -1,0 +1,43 @@
+Reading symbols from ./shrunk-o0...
+(gdb) break shrunk.c:9
+Breakpoint 1 at 0x11d6: file shrunk.c, line 9.
+(gdb) run 21
+Starting program: /home/hatch/workspace/build-check/gdb-scratch/work/shrunk-o0 21
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+answer = 43
+
+Breakpoint 1, main (argc=2, argv=0x7fffffffc038) at shrunk.c:9
+9	    printf("done\n");
+(gdb) print seed
+$1 = 21
+(gdb) print answer
+$2 = 43
+(gdb) quit
+A debugging session is active.
+
+	Inferior 1 [process 90194] will be killed.
+
+Quit anyway? (y or n) y
+Reading symbols from ./shrunk-o2...
+(gdb) break shrunk.c:9
+Breakpoint 1 at 0x10db: file shrunk.c, line 10.
+(gdb) run 21
+Starting program: /home/hatch/workspace/build-check/gdb-scratch/work/shrunk-o2 21
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+answer = 43
+done
+
+Breakpoint 1, main (argc=<optimized out>, argv=<optimized out>) at shrunk.c:10
+10	    return 0;
+(gdb) print seed
+$1 = <optimized out>
+(gdb) print answer
+$2 = <optimized out>
+(gdb) quit
+A debugging session is active.
+
+	Inferior 1 [process 90208] will be killed.
+
+Quit anyway? (y or n) y

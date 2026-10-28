@@ -1,0 +1,17 @@
+$ ./convert 100
+100 C = 132 F
+$ ./convert 0
+0 C = 32 F
+$ ./convert -40
+-40 C = -8 F
+$ gdb -q ./convert -batch -ex 'break to_fahrenheit' -ex 'run 100' -ex 'print (9 / 5)' -ex 'print celsius' -ex next -ex 'print fahr'
+Breakpoint 1 at 0x1194: file convert.c, line 8.
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 1, to_fahrenheit (celsius=100) at convert.c:8
+8	    int fahr = (9 / 5) * celsius + 32;  /* bug: 9 / 5 is 1 in integer maths */
+$1 = 1
+$2 = 100
+9	    return fahr;
+$3 = 132

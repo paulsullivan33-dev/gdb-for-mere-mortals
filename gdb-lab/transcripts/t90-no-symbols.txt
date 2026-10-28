@@ -1,0 +1,18 @@
+$ gcc -O0 -o store-plain store.c
+$ gdb -q ./store-plain -batch -ex 'break store_value' -ex run -ex 'print slot' -ex 'info locals'
+Breakpoint 1 at 0x11c2
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 1, 0x00005555555551c2 in store_value ()
+No symbol table is loaded.  Use the "file" command.
+No symbol table info available.
+$ strip -o store-stripped store-plain
+$ gdb -q ./store-stripped -batch -ex 'break main' -ex run
+Function "main" not defined.
+Make breakpoint pending on future shared library load? (y or [n]) [answered N; input not from terminal]
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Program received signal SIGSEGV, Segmentation fault.
+0x00005555555551d9 in ?? ()

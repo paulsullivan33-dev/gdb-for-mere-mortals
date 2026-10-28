@@ -1,0 +1,67 @@
+Reading symbols from ./basket...
+(gdb) break main
+Breakpoint 1 at 0x1155: file basket.c, line 18.
+(gdb) run
+Starting program: /home/hatch/workspace/build-check/gdb-scratch/work/basket 
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 1, main () at basket.c:18
+18	    int count = 5;
+(gdb) watch total
+Hardware watchpoint 2: total
+(gdb) continue
+Continuing.
+
+Hardware watchpoint 2: total
+
+Old value = 32767
+New value = 0
+main () at basket.c:22
+22	    for (i = 0; i < count - 1; i++) {   /* bug: stops one early */
+(gdb) continue
+Continuing.
+
+Hardware watchpoint 2: total
+
+Old value = 0
+New value = 349
+main () at basket.c:22
+22	    for (i = 0; i < count - 1; i++) {   /* bug: stops one early */
+(gdb) continue
+Continuing.
+
+Hardware watchpoint 2: total
+
+Old value = 349
+New value = 409
+main () at basket.c:22
+22	    for (i = 0; i < count - 1; i++) {   /* bug: stops one early */
+(gdb) continue
+Continuing.
+
+Hardware watchpoint 2: total
+
+Old value = 409
+New value = 1308
+main () at basket.c:22
+22	    for (i = 0; i < count - 1; i++) {   /* bug: stops one early */
+(gdb) continue
+Continuing.
+
+Hardware watchpoint 2: total
+
+Old value = 1308
+New value = 1433
+main () at basket.c:22
+22	    for (i = 0; i < count - 1; i++) {   /* bug: stops one early */
+(gdb) print i
+$1 = 3
+(gdb) print items[4]
+$2 = {name = 0x55555555601e "lamp", price = 2400}
+(gdb) delete 2
+(gdb) continue
+Continuing.
+items: 5, total: 1433 cents
+[Inferior 1 (process 89842) exited normally]
+(gdb) quit

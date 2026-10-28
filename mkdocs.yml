@@ -1,0 +1,29 @@
+site_name: GDB for Mere Mortals
+site_description: The GNU debugger, for programs that crash or give the wrong answer. Stopping a running program, reading its variables and its call stack, catching the moment a value changes, and examining what a crash left behind, with the limits stated plainly.
+site_url: https://paulsullivan33-dev.github.io/gdb-for-mere-mortals/
+copyright: 'Part of <a href="https://paulsullivan33-dev.github.io/mere-mortals/">For Mere Mortals</a> · Text <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>, code MIT'
+
+# Guides live at the repo root (nice for GitHub browsing).
+# The deploy workflow copies them into docs/ before building.
+theme:
+  name: material
+
+nav:
+  - Home: index.md
+  - What GDB Is: what-gdb-is.md
+  - The Moving Parts: the-moving-parts.md
+  - Installing GDB: installing-gdb.md
+  - Your First Session: your-first-session.md
+  - Chasing a Crash: chasing-a-crash.md
+  - Breakpoints and Stepping: breakpoints-and-stepping.md
+  - Watching Variables: watching-variables.md
+  - Frames and the Call Stack: frames-and-the-call-stack.md
+  - Arguments and Batch Mode: arguments-and-batch-mode.md
+  - Core Dumps, After the Fact: core-dumps.md
+  - Making GDB Yours: making-gdb-yours.md
+  - Recipes: recipes.md
+  - The Neighbours: the-neighbours.md
+  - Limits: limits.md
+  - Troubleshooting: troubleshooting.md
+  - Glossary: glossary.md
+  - Writing Criteria: criteria.md

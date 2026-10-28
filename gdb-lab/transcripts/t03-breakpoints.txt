@@ -1,0 +1,35 @@
+Reading symbols from ./basket...
+(gdb) break main
+Breakpoint 1 at 0x1155: file basket.c, line 18.
+(gdb) break basket.c:23 if i == 2
+Breakpoint 2 at 0x116c: file basket.c, line 23.
+(gdb) info breakpoints
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x0000000000001155 in main at basket.c:18
+2       breakpoint     keep y   0x000000000000116c in main at basket.c:23
+	stop only if i == 2
+(gdb) run
+Starting program: /home/hatch/workspace/build-check/gdb-scratch/work/basket 
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 1, main () at basket.c:18
+18	    int count = 5;
+(gdb) continue
+Continuing.
+
+Breakpoint 2, main () at basket.c:23
+23	        total += items[i].price;
+(gdb) print i
+$1 = 2
+(gdb) print total
+$2 = 409
+(gdb) next
+22	    for (i = 0; i < count - 1; i++) {   /* bug: stops one early */
+(gdb) print total
+$3 = 1308
+(gdb) continue
+Continuing.
+items: 5, total: 1433 cents
+[Inferior 1 (process 89721) exited normally]
+(gdb) quit

@@ -1,0 +1,46 @@
+Reading symbols from ./countdown...
+(gdb) break countdown
+Breakpoint 1 at 0x1178: file countdown.c, line 5.
+(gdb) run
+Starting program: /home/hatch/workspace/build-check/gdb-scratch/work/countdown 
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 1, countdown (n=3) at countdown.c:5
+5	    if (n == 0) {
+(gdb) continue
+Continuing.
+3...
+
+Breakpoint 1, countdown (n=2) at countdown.c:5
+5	    if (n == 0) {
+(gdb) continue
+Continuing.
+2...
+
+Breakpoint 1, countdown (n=1) at countdown.c:5
+5	    if (n == 0) {
+(gdb) backtrace
+#0  countdown (n=1) at countdown.c:5
+#1  0x00005555555551b5 in countdown (n=2) at countdown.c:10
+#2  0x00005555555551b5 in countdown (n=3) at countdown.c:10
+#3  0x00005555555551c9 in main () at countdown.c:15
+(gdb) frame 2
+#2  0x00005555555551b5 in countdown (n=3) at countdown.c:10
+10	    countdown(n - 1);
+(gdb) info args
+n = 3
+(gdb) frame 0
+#0  countdown (n=1) at countdown.c:5
+5	    if (n == 0) {
+(gdb) continue
+Continuing.
+1...
+
+Breakpoint 1, countdown (n=0) at countdown.c:5
+5	    if (n == 0) {
+(gdb) continue
+Continuing.
+liftoff
+[Inferior 1 (process 89791) exited normally]
+(gdb) quit

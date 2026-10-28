@@ -1,0 +1,14 @@
+# The lab's example .gdbinit — chapter 11 explains each line.
+set pagination off
+set confirm off
+set print pretty on
+set listsize 20
+set history save on
+set history filename ~/.gdb_history
+
+define bmain
+    break main
+end
+document bmain
+Set a breakpoint at the start of main.
+end

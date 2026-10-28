@@ -1,0 +1,26 @@
+Reading symbols from ./basket...
+(gdb) show pagination
+State of pagination is off.
+(gdb) show listsize
+Number of source lines gdb will list by default is 20.
+(gdb) bmain
+Breakpoint 1 at 0x1155: file basket.c, line 18.
+(gdb) run
+Starting program: /home/hatch/workspace/build-check/gdb-scratch/work/basket 
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 1, main () at basket.c:18
+18	    int count = 5;
+(gdb) print items[0]
+$1 = {
+  name = 0x555555556004 "notebook",
+  price = 349
+}
+(gdb) continue
+Continuing.
+items: 5, total: 1433 cents
+[Inferior 1 (process 90138) exited normally]
+(gdb) quit
+$ ls -la ~/.gdb_history
+-rw------- 1 root root 69 Oct 28 12:02 .gdb_history

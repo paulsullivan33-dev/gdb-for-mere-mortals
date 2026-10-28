@@ -1,0 +1,16 @@
+$ gcc -g -O0 -fsanitize=address -o store-asan store.c
+$ ./store-asan
+AddressSanitizer:DEADLYSIGNAL
+=================================================================
+==90221==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x634f0e183325 bp 0x7ffe0f98dc90 sp 0x7ffe0f98dc70 T0)
+==90221==The signal is caused by a WRITE memory access.
+==90221==Hint: address points to the zero page.
+    #0 0x634f0e183325 in store_value /home/hatch/workspace/build-check/gdb-scratch/work/store.c:23
+    #1 0x634f0e183359 in main /home/hatch/workspace/build-check/gdb-scratch/work/store.c:31
+    #2 0x743e1a6f21c9  (/lib/x86_64-linux-gnu/libc.so.6+0x2a1c9) (BuildId: a4a7992a8e66555c8141ab2a08a8465ff6e0ea65)
+    #3 0x743e1a6f228a in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x2a28a) (BuildId: a4a7992a8e66555c8141ab2a08a8465ff6e0ea65)
+    #4 0x634f0e183144 in _start (/home/hatch/workspace/build-check/gdb-scratch/work/store-asan+0x1144) (BuildId: 33374962f0bbb0d1dd3e66b4893d338d501c533f)
+
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /home/hatch/workspace/build-check/gdb-scratch/work/store.c:23 in store_value
+==90221==ABORTING

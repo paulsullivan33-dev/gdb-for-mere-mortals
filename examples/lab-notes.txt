@@ -1,0 +1,130 @@
+The lab — one machine, seven small programs, no one else's code
+====================================================================
+
+The lab is GDB as Ubuntu ships it, run on
+the build machine (an Ubuntu 24.04
+sandbox, 2 CPUs, 7.7 GB RAM):
+
+  * GDB 15.1 from Ubuntu's own packages
+    (the gdb package plus libbabeltrace1,
+    libipt2, libsource-highlight4t64 and
+    libdebuginfod1t64), downloaded and
+    unpacked — not installed — into a
+    private folder, because the sandbox
+    does not permit system-wide installs.
+    A small wrapper exports
+    LD_LIBRARY_PATH pointing at the
+    unpacked libraries and runs the real
+    binary, so transcripts show plain
+    `gdb` throughout.
+  * GCC 13.3.0, already installed on the
+    machine, compiled every fixture.
+  * Seven fixture programs written for
+    the guide (gdb-lab/fixtures/):
+    sum.c      two numbers added in a
+               helper; the first session.
+    store.c    a three-slot store asked
+               for a fourth slot; the
+               segfault of chapter 5.
+    basket.c   five shop items and an
+               off-by-one loop; chapters
+               6 and 7.
+    convert.c  Celsius to Fahrenheit with
+               an integer-division bug;
+               chapter 9. Right at 0,
+               wrong at 100 and -40.
+    countdown.c  recursion, for the stack
+               of chapter 8.
+    shrunk.c   built twice, -O0 and -O2,
+               for chapter 14.
+    sleeper.c  prints a tick a second;
+               the lab's own process for
+               the attach attempt.
+  * Interactive transcripts were recorded
+    through a terminal session so the
+    (gdb) prompts and the typed commands
+    are the session as it happened; batch
+    and shell transcripts are the commands
+    as run, in order, complete.
+
+What the lab ran, in
+gdb-lab/transcripts/:
+
+  * t00 versions: gcc 13.3.0, gdb 15.1.
+  * t01 first session on sum: break,
+    run, step in, prints, finish (with
+    the not-yet-assigned `total` printing
+    garbage until one `next` completed
+    the line — kept in the transcript and
+    explained in chapter 4), continue.
+  * t02 the crash: SIGSEGV at store.c:23,
+    backtrace of two frames, slot = 0x0.
+  * t03 breakpoints: by function, by
+    line with `if i == 2`, the ledger,
+    a `next` over the loop's edge.
+  * t04 the watchpoint: `watch total`,
+    five firings (the initialisation
+    plus four additions) for five items,
+    i = 3 and items[4] read at the last
+    firing, the watchpoint deleted
+    before the clean exit.
+  * t05 convert plainly at 100, 0, -40,
+    then one batch session: print (9/5)
+    is 1, print fahr is 132.
+  * t06 frames: four-deep backtrace in
+    countdown, frame 2 visited, its n
+    read as 3.
+  * t07 cores: the pattern is `core`;
+    `ulimit -c unlimited` is refused
+    (the sandbox's hard limit is 0 and
+    cannot be raised from inside), the
+    crash leaves no file; gcore writes
+    basket.core at a chosen stop, and a
+    fresh session reads i = 2 and
+    total = 409 back out of it.
+  * t08 the lab's .gdbinit, in its own
+    home (gdb-lab/gdbinit): pagination
+    off, listsize 20, `bmain` defined
+    and used, a struct pretty-printed,
+    the history file in place.
+  * t09 shrunk both ways: -O0 prints 21
+    and 43; -O2 stops on a moved line
+    and reports argc, argv, seed and
+    answer all <optimized out>.
+  * t11 the same crash compiled with
+    -fsanitize=address: its report names
+    the write, the zero page, and the
+    same two frames.
+  * t90 the dark: store built without
+    -g (print refused, info locals
+    empty) and stripped (break main
+    refused by name; the crash stops at
+    a bare address).
+
+What the lab could not do:
+
+  * Attach. The kernel's ptrace scope
+    is 1 in the sandbox, so gdb may
+    attach only to its own descendants;
+    the lab's sleeper is a sibling, and
+    gdb refused, naming the setting
+    (t10). Chapter 12 teaches attach
+    around that verified refusal; a
+    successful attach is documented
+    only.
+  * A kernel-written core file, for the
+    reason in t07. Chapter 10's
+    examination half is verified against
+    the gcore file instead.
+  * Graphical front-ends, remote
+    debugging, other languages' runtimes
+    and multithreaded fixtures are
+    characterised in the text, not run;
+    criteria.md keeps the full ledger.
+
+Nothing in the lab is modelled on any
+real person, program or organisation.
+The data is a shopping list, three
+temperatures and numbers small enough
+to check by hand; the only processes
+touched were the lab's own.

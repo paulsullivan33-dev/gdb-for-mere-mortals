@@ -1,0 +1,33 @@
+Reading symbols from ./store...
+(gdb) run
+Starting program: /home/hatch/workspace/build-check/gdb-scratch/work/store 
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Program received signal SIGSEGV, Segmentation fault.
+0x00005555555551d9 in store_value (v=40) at store.c:23
+23	    *slot = v;              /* crashes when slot is NULL */
+(gdb) backtrace
+#0  0x00005555555551d9 in store_value (v=40) at store.c:23
+#1  0x000055555555520e in main () at store.c:31
+(gdb) print slot
+$1 = (int *) 0x0
+(gdb) info locals
+slot = 0x0
+(gdb) list
+18	}
+19	
+20	void store_value(int v)
+21	{
+22	    int *slot = find_free_slot();
+23	    *slot = v;              /* crashes when slot is NULL */
+24	}
+25	
+26	int main(void)
+27	{
+(gdb) quit
+A debugging session is active.
+
+	Inferior 1 [process 89646] will be killed.
+
+Quit anyway? (y or n) y

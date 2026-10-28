@@ -1,0 +1,37 @@
+Reading symbols from ./sum...
+(gdb) break main
+Breakpoint 1 at 0x1173: file sum.c, line 11.
+(gdb) run
+Starting program: /home/hatch/workspace/build-check/gdb-scratch/work/sum 
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 1, main () at sum.c:11
+11	    int total = add(2, 3);
+(gdb) step
+add (a=2, b=3) at sum.c:5
+5	    int result = a + b;
+(gdb) print a
+$1 = 2
+(gdb) print b
+$2 = 3
+(gdb) step
+6	    return result;
+(gdb) print result
+$3 = 5
+(gdb) finish
+Run till exit from #0  add (a=2, b=3) at sum.c:6
+0x0000555555555182 in main () at sum.c:11
+11	    int total = add(2, 3);
+Value returned is $4 = 5
+(gdb) print total
+$5 = 32767
+(gdb) next
+12	    printf("total = %d\n", total);
+(gdb) print total
+$6 = 5
+(gdb) continue
+Continuing.
+total = 5
+[Inferior 1 (process 90819) exited normally]
+(gdb) quit
